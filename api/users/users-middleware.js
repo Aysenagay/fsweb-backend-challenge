@@ -1,10 +1,26 @@
-const router = require("express").Router();
-const {
-  usernameVarmi,
-  rolAdiGecerlimi,
-  checkPayload,
-} = require("./auth-middleware");
-const { JWT_SECRET } = require("../secrets"); // bu secret'ı kullanın!
+const { JWT_SECRET } = require("../secrets"); // bu secreti kullanın!
 const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
-const userModel = require("../users/users-model");
+
+const sinirli = (req, res, next) => {
+  try {
+    let authHeader = req.headers["authorization"];
+    if (!authHeader) {
+      res.status(401).json({ message: "Token gereklidir" });
+    } else {
+      jwt.verify(authHeader, JWT_SECRET, (err, decodedToken) => {
+        if (err) {
+          res.status(401).json({ message: "token gecersizdir" });
+        } else {
+          req.decodedToken = decodedToken;
+          next();
+        }
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  sinirli,
+};

@@ -3,26 +3,6 @@ const userModel = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 
-const sinirli = (req, res, next) => {
-  try {
-    let authHeader = req.headers["authorization"];
-    if (!authHeader) {
-      res.status(401).json({ message: "Token gereklidir" });
-    } else {
-      jwt.verify(authHeader, JWT_SECRET, (err, decodedToken) => {
-        if (err) {
-          res.status(401).json({ message: "token gecersizdir" });
-        } else {
-          req.decodedToken = decodedToken;
-          next();
-        }
-      });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
 const usernameVarmi = async (req, res, next) => {
   try {
     let isExist = await userModel.getUserById(req.body.user_id);
@@ -66,5 +46,4 @@ const checkPayload = (req, res, next) => {
 module.exports = {
   usernameVarmi,
   checkPayload,
-  sinirli,
 };
