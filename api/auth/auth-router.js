@@ -3,6 +3,7 @@ const { JWT_SECRET } = require("../secrets");
 const userModel = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
+const { checkPayload, usernameVarmi } = require("./auth-middleware");
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -18,7 +19,7 @@ router.post("/register", async (req, res, next) => {
     next(error);
   }
 });
-router.post("/login", (req, res, next) => {
+router.post("/login", checkPayload, usernameVarmi, (req, res, next) => {
   try {
     let payload = {
       subject: req.currentUser.user_id,
