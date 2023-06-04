@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 const { checkPayload, usernameVarmi } = require("./auth-middleware");
 
-router.post("/register", async (req, res, next) => {
+router.post("/register", checkPayload, async (req, res, next) => {
   try {
     let hashedPassword = bcryptjs.hashSync(req.body.user_password);
     let userRequestModel = {
