@@ -28,7 +28,7 @@ router.post("/login", checkPayload, usernameVarmi, (req, res, next) => {
     };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
     res.json({
-      message: `${req.currentUser.user_name} geri geldi!`,
+      message: `${req.currentUser.user_name} Seni görmek çok güzel!`,
       token: token,
     });
   } catch (error) {
