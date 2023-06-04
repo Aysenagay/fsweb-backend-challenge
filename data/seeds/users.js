@@ -42,6 +42,6 @@ exports.seed = async function (knex) {
     },
   ];
 
-  await knex("tweets").insert(defaultUsers);
-  await knex("users").insert(defaultTweets);
+  await knex("users").insert(defaultUsers);
+  await knex("tweets").insert(defaultTweets);
 };
