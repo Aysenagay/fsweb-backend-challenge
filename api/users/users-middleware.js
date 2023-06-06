@@ -21,6 +21,20 @@ const sinirli = (req, res, next) => {
   }
 };
 
+const checkTweetPayload = (req, res, next) => {
+  try {
+    let { user_id, user_name, body } = req.body;
+    if (!user_id || !user_name || !body) {
+      res.status(400).json({ messsage: "Eksik alan var" });
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   sinirli,
+  checkTweetPayload,
 };

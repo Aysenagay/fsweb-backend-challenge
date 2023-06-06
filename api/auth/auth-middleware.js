@@ -2,6 +2,10 @@ const { JWT_SECRET } = require("../secrets");
 const userModel = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
+const db = require("../../data/db-config.js");
+
+
+
 
 const usernameVarmi = async (req, res, next) => {
   try {
@@ -30,6 +34,20 @@ const usernameVarmi = async (req, res, next) => {
   }
 };
 
+const checkDuplicateEmail = async (req, res, next) => {
+  const { user_email } = req.body;
+
+  try {
+    const existingUser = await db("users").where({ user_email }).first();
+    if (existingUser) {
+      return res.status(409).json({ error: "Bu email zaten kullanılıyor." });
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const checkPayload = (req, res, next) => {
   try {
     let { user_email, user_password } = req.body;
@@ -46,4 +64,5 @@ const checkPayload = (req, res, next) => {
 module.exports = {
   usernameVarmi,
   checkPayload,
+  checkDuplicateEmail,
 };

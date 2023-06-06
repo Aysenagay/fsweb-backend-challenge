@@ -4,6 +4,10 @@ function getAllTweets() {
   return db("tweets");
 }
 
+function getAllUsers() {
+  return db("users");
+}
+
 function getTweetById(user_id) {
   return db("tweets").where("user_id", user_id);
 }
@@ -42,4 +46,5 @@ module.exports = {
   remove,
   createUser,
   getUserById,
+  getAllUsers,
 };
