@@ -52,7 +52,6 @@ describe("UserTestler", () => {
     //arrange
     const userData = {
       user_name: "Pikacu",
-      user_password: "123456",
     };
     //act
     let actual = await request(server)
@@ -118,5 +117,18 @@ describe("UserTestler", () => {
     // Assert
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
+  });
+  test("[6] yeni tweet oluşuyor mu", async () => {
+    const userDataTweet = {
+      img_url:
+        "https://images.freeimages.com/fic/images/icons/1994/vista_style_business_and_data/256/users.png?ref=findicons",
+      user_name: "Aysen",
+      body: "About",
+      user_id: "1",
+    };
+
+    let actual = await request(server)
+      .post("/api/users/tweets")
+      .send(userDataTweet);
   });
 });

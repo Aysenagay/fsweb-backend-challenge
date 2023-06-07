@@ -33,7 +33,7 @@ router.post("/login", checkPayload, usernameVarmi, (req, res, next) => {
   try {
     let payload = {
       subject: req.currentUser.user_id,
-      user_password: req.currentUser.user_password,
+      user_name: req.currentUser.user_name,
       user_email: req.currentUser.user_email,
     };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });

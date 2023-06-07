@@ -45,8 +45,8 @@ const checkDuplicateEmail = async (req, res, next) => {
 
 const checkPayload = (req, res, next) => {
   try {
-    let { user_email, user_password } = req.body;
-    if (!user_email || !user_password) {
+    let { user_name, user_password } = req.body;
+    if (!user_name || !user_password) {
       res.status(400).json({ message: "Eksik alan var" });
     } else {
       next();
