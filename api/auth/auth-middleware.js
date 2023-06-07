@@ -1,15 +1,10 @@
-const { JWT_SECRET } = require("../secrets");
+const db = require("../../data/db-config");
 const userModel = require("../users/users-model");
-const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
-const db = require("../../data/db-config.js");
-
-
-
 
 const usernameVarmi = async (req, res, next) => {
   try {
-    let isExist = await userModel.getUserById(req.body.user_id);
+    let isExist = await userModel.getUserByName(req.body.user_name);
     if (isExist && isExist.length > 0) {
       let currentUser = isExist[0];
       let isPasswordMatch = bcryptjs.compareSync(
@@ -18,7 +13,7 @@ const usernameVarmi = async (req, res, next) => {
       );
       if (!isPasswordMatch) {
         res.status(401).json({
-          message: "Geçersiz kriter",
+          message: "Girilen bilgiler hatalı.!",
         });
       } else {
         req.currentUser = currentUser;
@@ -26,7 +21,7 @@ const usernameVarmi = async (req, res, next) => {
       }
     } else {
       res.status(401).json({
-        message: "Geçersiz kriter",
+        message: "Girilen bilgiler hatalı!",
       });
     }
   } catch (error) {
@@ -40,7 +35,7 @@ const checkDuplicateEmail = async (req, res, next) => {
   try {
     const existingUser = await db("users").where({ user_email }).first();
     if (existingUser) {
-      return res.status(409).json({ error: "Bu email zaten kullanılıyor." });
+      return res.status(409).json({ error: "Bu e-posta zaten kullanılıyor." });
     }
     next();
   } catch (error) {
@@ -50,9 +45,9 @@ const checkDuplicateEmail = async (req, res, next) => {
 
 const checkPayload = (req, res, next) => {
   try {
-    let { user_email, user_password } = req.body;
-    if (!user_email || !user_password) {
-      res.status(400).json({ messsage: "Eksik alan var" });
+    let { user_name, user_email, user_password } = req.body;
+    if (!user_name || !user_email || !user_password) {
+      res.status(400).json({ message: "Eksik alan var" });
     } else {
       next();
     }

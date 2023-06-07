@@ -10,15 +10,6 @@ const {
 } = require("./auth-middleware");
 const { sinirli } = require("../users/users-middleware");
 
-router.get("/", sinirli, (req, res, next) => {
-  userModel
-    .getAllUsers()
-    .then((user) => {
-      res.json(user);
-    })
-    .catch(next);
-});
-
 router.post(
   "/register",
   checkPayload,
@@ -53,6 +44,14 @@ router.post("/login", checkPayload, usernameVarmi, (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+router.get("/", sinirli, (req, res, next) => {
+  userModel
+    .getAllUsers()
+    .then((user) => {
+      res.json(user);
+    })
+    .catch(next);
 });
 
 module.exports = router;

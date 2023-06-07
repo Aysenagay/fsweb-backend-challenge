@@ -1,4 +1,4 @@
-const { JWT_SECRET } = require("../secrets"); // bu secreti kullanın!
+const { JWT_SECRET } = require("../secrets");
 const jwt = require("jsonwebtoken");
 
 const sinirli = (req, res, next) => {

@@ -15,6 +15,9 @@ function getTweetById(user_id) {
 function getUserById(user_id) {
   return db("users").where("user_id", user_id);
 }
+function getUserByName(username) {
+  return db("users").where("user_name", username);
+}
 
 async function createTweet(tweet) {
   const [insertedId] = await db("tweets").insert(tweet);
@@ -47,4 +50,5 @@ module.exports = {
   createUser,
   getUserById,
   getAllUsers,
+  getUserByName,
 };
