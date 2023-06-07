@@ -105,7 +105,6 @@ describe("UserTestler", () => {
       user_name: "AysenAgay",
       user_password: "123456",
       user_email: "aysen@example.com",
-      user_id: "11",
     };
     let actual = await request(server)
       .post("/api/auth/login")
