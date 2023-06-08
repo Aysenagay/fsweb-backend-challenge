@@ -13,7 +13,7 @@ function getTweetById(user_id) {
 }
 
 function getUserById(user_id) {
-  return db("users").where("user_id", user_id);
+  return db("users").where("user_id", user_id).first();
 }
 function getUserByName(username) {
   return db("users").where("user_name", username);
@@ -39,7 +39,7 @@ async function createUser({ user_name, user_password, user_email }) {
     });
     created_user_id = user_id;
   });
-  return getUserById(created_user_id);
+  return getUserById(created_user_id).first();
 }
 
 module.exports = {
