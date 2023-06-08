@@ -27,7 +27,7 @@ router.post("/post", checkTweetPayload, async (req, res, next) => {
       img_url: req.body.img_url,
     };
 
-    const insertedTweet = await tweetModel.createTweet(modelTweet);
+    const insertedTweet = await Users.createTweet(modelTweet);
     res.status(201).json(insertedTweet);
   } catch (error) {
     next(error);
